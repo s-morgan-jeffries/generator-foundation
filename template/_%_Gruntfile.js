@@ -1,4 +1,4 @@
-// Generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
+// Generated on <%%= (new Date).toISOString().split('T')[0] %> using <%%= pkg.name %> <%%= pkg.version %>
 // jshint node: true
 'use strict';
 
@@ -34,17 +34,20 @@ module.exports = function (grunt) {
         // Don't use this. We're using the base_layout.hbs file for usemin, so we
 //        assets: 'assets',
         // No plugins for now
-//        plugins: ['permalinks'],
+//        plugins: ['assemble-middleware-lunr'],
+        lunr: {},
         partials: ['<%%= yeoman.src %>/views/partials/*.hbs'],
         layoutdir: '<%%= yeoman.src %>/views/layouts',
-        data: '<%%= yeoman.src %>/views/data/dummy.json',
+        // Just use YML Front Matter
+//        data: '<%%= yeoman.src %>/views/data/dummy.json',
         flatten: true
       },
       static: {
-        options: {
-          layout: 'standard_layout.hbs'
-        },
-        src: ['<%%= yeoman.src %>/views/static/**/*.hbs'],
+        expand: true,
+        cwd: '<%%= yeoman.src %>/views/static',
+        src: [
+          './**/*.hbs'
+        ],
         dest: '<%%= yeoman.temp %>/'
       }
     },
@@ -96,7 +99,9 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%%= yeoman.dist %>/*',
-            '!<%%= yeoman.dist %>/.git*'
+            '!<%%= yeoman.dist %>/.git*',
+            '!<%%= yeoman.dist %>/CNAME',
+            '!<%%= yeoman.dist %>/_00.txt'
           ]
         }]
       },
@@ -186,20 +191,15 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '.tmp',
             dest: '<%%= yeoman.dist %>',
-            src: ['*.html']
+            src: ['**/*.html']
           },
-          // You have to have this to copy fonts
+          // For copying fonts, images, and CSS. Might be easier just to copy everything?
           {
             expand: true,
             cwd: '<%%= yeoman.src %>',
             dest: '<%%= yeoman.dist %>',
-//            src: ['bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/*.*'],
-
             src: [
-              'bower_components/**/*.eot',
-              'bower_components/**/*.svg',
-              'bower_components/**/*.ttf',
-              'bower_components/**/*.woff'
+              '{bower_components, components}/**/*.{eot, svg, ttf, woff, png, gif, css}'
             ]
           }
         ]
@@ -241,7 +241,9 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%%= yeoman.src %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
+          src: [
+            '**/*.{png,jpg,jpeg,gif}'
+          ],
           dest: '<%%= yeoman.dist %>/images'
         }]
       }
@@ -293,8 +295,9 @@ module.exports = function (grunt) {
           '../../<%%= yeoman.src %>/bower_components/sinonjs/sinon.js',
           '../../<%%= yeoman.src %>/bower_components/jasmine-sinon/lib/jasmine-sinon.js',
           // Dependencies (if any)
+//          '../../<%%= yeoman.src %>/bower_components/jquery/dist/jquery.js',
           // Utilities (if any)
-//          '../../<%%= yeoman.src %>/bower_components/lodash/dist/lodash.js',
+          '../../node_modules/lodash/lodash.js',
           // The source files for the scripts under test
           '../../<%%= yeoman.src %>/scripts/**/*.js',
           // These are all the tests.
@@ -334,7 +337,7 @@ module.exports = function (grunt) {
           patterns: [
             {
               match: '../../bower_components',
-              replacement: 'bower_components'
+              replacement: '/bower_components'
             }
           ],
           usePrefix: false
@@ -358,7 +361,8 @@ module.exports = function (grunt) {
             '<%%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%%= yeoman.dist %>/styles/{,*/}*.css',
             '<%%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%%= yeoman.dist %>/styles/fonts/*'
+            '<%%= yeoman.dist %>/styles/fonts/*',
+            '!<%%= yeoman.dist %>/images/norev/*'
           ]
         }
       }
@@ -404,7 +408,7 @@ module.exports = function (grunt) {
 
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
-      html: ['<%%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%%= yeoman.dist %>/**/*.html'],
       css: ['<%%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%%= yeoman.dist %>']
@@ -422,6 +426,7 @@ module.exports = function (grunt) {
           html: {
             steps: {
               js: ['concat', 'uglifyjs'],
+//              js: ['concat'],
               css: ['cssmin']
             },
             post: {}
@@ -535,17 +540,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-//  grunt.registerTask('develop', [
-//    'clean:server',
-//    'wiredep',
-//    'replace:develop',
-//    'assemble',
-//    'concurrent:server',
-//    'autoprefixer',
-//    'connect:develop',
-//    'watch'
-//  ]);
-
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
@@ -570,7 +564,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'htmlmin'
+     'htmlmin'
   ]);
 
   grunt.registerTask('default', [
@@ -578,4 +572,5 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
 };

@@ -1,4 +1,4 @@
-# generator-static-site [![Build Status](https://secure.travis-ci.org/s-morgan-jeffries/generator-static-site.png?branch=master)](https://travis-ci.org/s-morgan-jeffries/generator-static-site)
+# generator-foundation [![Build Status](https://secure.travis-ci.org/s-morgan-jeffries/generator-foundation.png?branch=master)](https://travis-ci.org/s-morgan-jeffries/generator-foundation)
 
 > [Yeoman](http://yeoman.io) generator
 
@@ -23,10 +23,10 @@ $ npm install -g yo
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-static-site from npm, run:
+To install generator-foundation from npm, run:
 
 ```bash
-$ npm install -g generator-static-site
+$ npm install -g generator-foundation
 ```
 
 Finally, initiate the generator:

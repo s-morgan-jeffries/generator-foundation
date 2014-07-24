@@ -43,6 +43,13 @@ var FoundationGenerator = yeoman.generators.Base.extend({
       }
       ,
       {
+        type: 'confirm',
+        name: 'useCompass',
+        message: 'Would you like to use the Compass extension for Sass?',
+        default: false
+      }
+      ,
+      {
         type: 'input',
         name: 'gitHubUsername',
         message: 'What is your GitHub username (used to set the repository in package.json)?',
@@ -53,6 +60,8 @@ var FoundationGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.siteName = props.siteName;
       this.rubyGemSet = props.rubyGemSet;
+      this.useCompass = props.useCompass;
+//      console.log(this.useCompass);
       this.gitHubUsername = props.gitHubUsername;
       done();
     }.bind(this));
