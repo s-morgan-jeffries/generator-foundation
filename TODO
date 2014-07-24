@@ -1,0 +1,2 @@
+t0d0: Add a hook so Ruby gems get installed right after the directory builds
+t0d0: Add a hook for copying _settings.scss from bower_components/foundation to styles/foundation
