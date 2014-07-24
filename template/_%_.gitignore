@@ -1,6 +1,7 @@
 node_modules
-dev_app/bower_components
+src/bower_components
 dist
 .tmp
+.sass-cache
 .idea
 .DS_Store

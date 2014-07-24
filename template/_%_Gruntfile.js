@@ -100,8 +100,7 @@ module.exports = function (grunt) {
             '.tmp',
             '<%%= yeoman.dist %>/*',
             '!<%%= yeoman.dist %>/.git*',
-            '!<%%= yeoman.dist %>/CNAME',
-            '!<%%= yeoman.dist %>/_00.txt'
+            '!<%%= yeoman.dist %>/CNAME'
           ]
         }]
       },
